@@ -1,0 +1,13 @@
+.m-10{
+  margin: 10px;
+}
+
+.w-74{
+  width: 87%;
+}
+
+.d-flex-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

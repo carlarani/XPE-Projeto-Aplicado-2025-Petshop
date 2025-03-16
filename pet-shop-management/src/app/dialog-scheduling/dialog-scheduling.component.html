@@ -1,0 +1,33 @@
+<h2 mat-dialog-title width="300px">Reservar agenda</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form" class="d-flex-wrap">
+    <mat-form-field class="m-10">
+      <mat-label>Data</mat-label>
+      <input matInput formControlName="date" />
+    </mat-form-field>
+    <mat-form-field class="m-10">
+      <mat-label>Hora</mat-label>
+      <input matInput formControlName="hour"/>
+    </mat-form-field>
+    <mat-form-field class="m-10 w-74">
+      <mat-label>Serviço</mat-label>
+      <mat-select formControlName="employee">
+        <mat-option *ngFor="let employee of employeesList" [value]="employee">{{ employee.service }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="m-10">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="customer">
+        <mat-option *ngFor="let customer of customersList" [value]="customer">{{customer.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="m-10">
+      <mat-label>Pet</mat-label>
+      <mat-select formControlName="pet">
+        <mat-option *ngFor="let pet of petsList" [value]="pet">{{pet.name}} - {{pet.type}} - {{pet.size}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <button mat-flat-button class="w-100" (click)="schedule()">Agendar</button>
+  </form>
+</mat-dialog-content>

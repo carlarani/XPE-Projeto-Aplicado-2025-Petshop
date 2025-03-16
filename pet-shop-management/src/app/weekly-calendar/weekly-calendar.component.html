@@ -1,0 +1,25 @@
+<div class="bg-color-general m-30">
+  <h1 class="d-flex-center">Semana {{calendar2025[selectedWeek-1].week}}</h1>
+  <table class="w-100 m-30">
+    <thead>
+      <th></th>
+      <th>Domingo<p>{{calendar2025[selectedWeek-1].daysOfWeek[0] | date: 'dd/MM/yyyy'}}</p></th>
+      <th>Segunda<p>{{calendar2025[selectedWeek-1].daysOfWeek[1] | date: 'dd/MM/yyyy'}}</p></th>
+      <th>Terça<p>{{calendar2025[selectedWeek-1].daysOfWeek[2] | date: 'dd/MM/yyyy'}}</p></th>
+      <th>Quarta<p>{{calendar2025[selectedWeek-1].daysOfWeek[3] | date: 'dd/MM/yyyy'}}</p></th>
+      <th>Quinta<p>{{calendar2025[selectedWeek-1].daysOfWeek[4] | date: 'dd/MM/yyyy'}}</p></th>
+      <th>Sexta<p>{{calendar2025[selectedWeek-1].daysOfWeek[5] | date: 'dd/MM/yyyy'}}</p></th>
+      <th>Sábado<p>{{calendar2025[selectedWeek-1].daysOfWeek[6] | date: 'dd/MM/yyyy'}}</p></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hour of schedulingHours">
+        <td>{{hour}}</td>
+        <td *ngFor="let day of calendar2025[selectedWeek-1].daysOfWeek">
+          <button class="w-100" mat-icon-button (click)="addScheduling(day , hour)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

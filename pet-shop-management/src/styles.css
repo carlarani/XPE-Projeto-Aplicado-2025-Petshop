@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%;}
+body { margin: 0; font-family: Poppins, "Helvetica Neue", sans-serif; }
+
+.d-flex-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-flex-space{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.w-100{
+  width: 100%;
+}
+
+/* element {
+  --first-color: #C0CDE9;
+  --second-color: #97A1D1;
+  --thrid-color: #433083;
+  --fourth-color: #2B2984;
+  --fifth-color: #572B55;
+} */
