@@ -1,5 +1,5 @@
 import { Guid } from 'guid-typescript';
-import { PetModel } from './../models/pet.model';
+import { PetModel } from './pet.model';
 
 export class WeeklyCalendarModel {
   week: number;

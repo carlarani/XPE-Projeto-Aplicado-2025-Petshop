@@ -2,6 +2,40 @@
   margin: 30px;
 }
 
-.w-100{
-  width: 100%;
+.w-45{
+  width: 45px;
+}
+
+.bath, .Banho{
+  background-color: #75C9C8;
+}
+
+.grooming, .Tosa{
+  background-color: #FFEE93;
+}
+
+.vet, .Veterinário{
+  background-color: #FE5F55;
+}
+
+.d-flex{
+  display: flex;
+  align-items: center;
+}
+
+.space-evenly{
+  justify-content: space-evenly;
+}
+
+.schedule-card{
+  width:45px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: xx-small;
+}
+
+.col-max-width{
+  max-width: 90px;
+  overflow: hidden;
 }

@@ -14,12 +14,27 @@
     <tbody>
       <tr *ngFor="let hour of schedulingHours">
         <td>{{hour}}</td>
-        <td *ngFor="let day of calendar2025[selectedWeek-1].daysOfWeek">
-          <button class="w-100" mat-icon-button (click)="addScheduling(day , hour)">
-            <mat-icon>add</mat-icon>
-          </button>
+        <td *ngFor="let day of calendar2025[selectedWeek-1].daysOfWeek" class="col-max-width">
+          <div  class="d-flex">
+            <div *ngFor="let scheduleCalendar of filteredScheduleCalendar" >
+              <div *ngIf="day===scheduleCalendar.date && hour===scheduleCalendar.hour" class="d-flex">
+                <div *ngFor="let schedule of scheduleCalendar.schedules" class="schedule-card" [ngClass]="schedule.employee.service===serviceEnum.bath ? 'bath': schedule.employee.service===serviceEnum.grooming ? 'grooming':'vet'" >
+                  {{schedule.pet.name}}
+                </div>
+                <button *ngIf="scheduleCalendar.schedules.length<3" class="w-45" mat-icon-button (click)="addScheduling(day , hour)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <section class="d-flex space-evenly"> Legenda:
+    <span [class]="serviceEnum.bath" class="schedule-card">{{serviceEnum.bath}}</span>
+    <span [class]="serviceEnum.grooming"  class="schedule-card">{{serviceEnum.grooming}}</span>
+    <span [class]="serviceEnum.veterinary_doctor"  class="schedule-card">{{serviceEnum.veterinary_doctor}}</span>
+  </section>
 </div>

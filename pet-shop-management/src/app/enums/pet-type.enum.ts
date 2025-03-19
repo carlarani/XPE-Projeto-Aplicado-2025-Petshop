@@ -1,4 +1,4 @@
-export enum PetType {
+export enum PetTypeEnum {
     'dog' = 'Cachorro',
     'cat' = 'Gato'
 }

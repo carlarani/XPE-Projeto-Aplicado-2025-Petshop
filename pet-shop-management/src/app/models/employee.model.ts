@@ -1,11 +1,11 @@
-import { PetType } from "../enums/pet-type";
-import { Service } from "../enums/service";
+import { PetTypeEnum } from "../enums/pet-type.enum";
+import { ServiceEnum } from "../enums/service.enum";
 
 export class EmployeeModel {
   name: string;
-  service: Service;
+  service: ServiceEnum;
 
-  constructor(name: string, service: Service){
+  constructor(name: string, service: ServiceEnum){
     this.name=name;
     this.service=service;
   }
