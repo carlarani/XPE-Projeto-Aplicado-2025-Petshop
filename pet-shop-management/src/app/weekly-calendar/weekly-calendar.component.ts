@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ScheduleModel } from '../models/schedule.model';
 import { WeeklyCalendarModel } from '../models/weekly-calendar.model';
 import { ServiceEnum } from "../enums/service.enum";
+import { W } from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
 
 export interface DialogData {
   date: Date;
@@ -35,7 +37,7 @@ export class WeeklyCalendarComponent implements OnInit{
   daysOfThisWeek: Date[]=[];
   firstDay = new Date(2025, 0, 1);
   dayCounter=1;
-  selectedWeek=12;
+  selectedWeek=0;
   schedulingHours = ['08:00', '09:00', '10:00', '11:00','12:00', '13:00','14:00', '15:00','16:00', '17:00']
   schedules: ScheduleModel[]=[];
 
@@ -43,12 +45,24 @@ export class WeeklyCalendarComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.startSelectedWeekInfo();
     this.calendar2025 = this.schedulingService.buildCalendarByWeek();
     if(this.scheduleCalendar2025) this.scheduleCalendar2025 = this.schedulingService.buildScheduleCalendar();
     this.getSchedulesForSelectedWeek();
+
   }
 
-  getSchedulesForSelectedWeek(){
+  private startSelectedWeekInfo() {
+    if (!localStorage.getItem('selectedWeek')) {
+      this.selectedWeek = 12;
+      localStorage.setItem('selectedWeek', this.selectedWeek.toString());
+    }
+    else {
+      this.selectedWeek = Number(localStorage.getItem('selectedWeek'));
+    }
+  }
+
+  getSchedulesForSelectedWeek(): void{
     this.filteredScheduleCalendar = this.scheduleCalendar2025.filter(x=> x.week===this.selectedWeek)
   }
 
@@ -65,5 +79,15 @@ export class WeeklyCalendarComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       location.reload();
     });
+  }
+
+  changeWeek(way:string){
+    if(way==='+')
+      this.selectedWeek++;
+    else
+      this.selectedWeek--;
+
+    localStorage.setItem('selectedWeek', this.selectedWeek.toString());
+    this.getSchedulesForSelectedWeek();
   }
 }

@@ -1,5 +1,12 @@
 <div class="bg-color-general m-30">
-  <h1 class="d-flex-center">Semana {{calendar2025[selectedWeek-1].week}}</h1>
+  <h1 class="d-flex-center">Semana
+    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="changeWeek('-')">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span id="selectedWeek">{{selectedWeek}}</span>
+    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="changeWeek('+')">
+      <mat-icon>chevron_right</mat-icon>
+    </button></h1>
   <table class="w-100 m-30">
     <thead>
       <th></th>
