@@ -3,6 +3,7 @@ import { MockService } from './mock.service';
 import { ScheduleModel } from '../models/schedule.model';
 import { ScheduleCalendarModel } from '../models/schedule-calendar.model';
 import { WeeklyCalendarModel } from '../models/weekly-calendar.model';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -72,11 +73,11 @@ export class SchedulingService{
   )
   this.initMockSchedules();
   return this.scheduleCalendar2025
-  }
+}
 
-  initMockSchedules(){
-    const localStorageSchedules = localStorage.getItem(this.objectName) || null;
-    if (!localStorageSchedules || JSON.parse(localStorageSchedules)?.length===0){
+initMockSchedules(){
+  const localStorageSchedules = localStorage.getItem(this.objectName) || null;
+  if (!localStorageSchedules || JSON.parse(localStorageSchedules)?.length===0){
       this.schedules = this.mockService.getSchedules();
       this.schedules.forEach(x=>{
         console.log('FIND', this.scheduleCalendar2025.findIndex(y=> x.date.getFullYear()===y.date.getFullYear() && x.date.getMonth()===y.date.getMonth() && x.date.getDate()===y.date.getDate() && x.hour===y.hour))
@@ -94,12 +95,12 @@ export class SchedulingService{
     else{
       this.dayCounter++;
       return new Date(this.firstDay.setDate(this.dayCounter-1));
-   }
+    }
   }
 
   save(){
-   localStorage.removeItem(this.objectName);
-   localStorage.setItem(this.objectName, JSON.stringify(this.scheduleCalendar2025));
+    localStorage.removeItem(this.objectName);
+    localStorage.setItem(this.objectName, JSON.stringify(this.scheduleCalendar2025));
   }
 
   addScheduling(schedule: ScheduleModel){
@@ -119,5 +120,13 @@ export class SchedulingService{
       });
       return list
     }
+  }
+
+  editScheduling(schedule: ScheduleModel) {
+    console.log(schedule);
+    const indexCalendarToEdit = this.scheduleCalendar2025.findIndex(x=> x.date===schedule.date && x.hour===schedule.hour)
+    const indexScheduleToEdit = this.scheduleCalendar2025[indexCalendarToEdit].schedules.findIndex(x=> x.id===schedule.id);
+    this.scheduleCalendar2025[indexCalendarToEdit].schedules[indexScheduleToEdit] = schedule;
+    this.save()
   }
 }

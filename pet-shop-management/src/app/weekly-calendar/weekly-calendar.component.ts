@@ -12,17 +12,19 @@ import { WeeklyCalendarModel } from '../models/weekly-calendar.model';
 import { ServiceEnum } from "../enums/service.enum";
 import { W } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 
 export interface DialogData {
   date: Date;
   hour: string;
-  unavailableServices:any[]
+  unavailableServices:any[];
+  schedule?: ScheduleModel
 }
 
 @Component({
   selector: 'app-weekly-calendar',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, CommonModule, MatIconModule],
+  imports: [MatButtonModule, MatDialogModule, CommonModule, MatIconModule, MatCardModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './weekly-calendar.component.html',
   styleUrl: './weekly-calendar.component.css'
@@ -67,10 +69,7 @@ export class WeeklyCalendarComponent implements OnInit{
   }
 
   addScheduling(date: Date, hour: string){
-    const unavailableServices: any[]=[];
-    this.scheduleCalendar2025.find(x=> x.date===date && x.hour===hour)?.schedules.forEach(x=>
-      unavailableServices.push(x.employee.service)
-    )
+    const unavailableServices: any[] = this.updateUnavailableServices(date, hour);
 
     const dialogRef = this.dialog.open(DialogSchedulingComponent, {
         data: {date: date, hour: hour, unavailableServices: unavailableServices},
@@ -81,6 +80,13 @@ export class WeeklyCalendarComponent implements OnInit{
     });
   }
 
+  private updateUnavailableServices(date: Date, hour: string) {
+    const unavailableServices: any[] = [];
+    this.scheduleCalendar2025.find(x => x.date === date && x.hour === hour)?.schedules.forEach(x => unavailableServices.push(x.employee.service)
+    );
+    return unavailableServices;
+  }
+
   changeWeek(way:string){
     if(way==='+')
       this.selectedWeek++;
@@ -89,5 +95,21 @@ export class WeeklyCalendarComponent implements OnInit{
 
     localStorage.setItem('selectedWeek', this.selectedWeek.toString());
     this.getSchedulesForSelectedWeek();
+  }
+
+  editScheduling(schedule: ScheduleModel){
+    console.log('schedule',schedule);
+    const index = this.scheduleCalendar2025.findIndex(x=> x.schedules.find( y=> y.id === schedule.id));
+    console.log('index',index);
+
+    const unavailableServices: any[] = this.updateUnavailableServices(schedule.date, schedule.hour);
+
+    const dialogRef = this.dialog.open(DialogSchedulingComponent, {
+      data: {date: schedule.date, hour: schedule.hour, unavailableServices: unavailableServices, schedule},
+  });
+
+    dialogRef.afterClosed().subscribe(result => {
+      location.reload();
+    });
   }
 }
