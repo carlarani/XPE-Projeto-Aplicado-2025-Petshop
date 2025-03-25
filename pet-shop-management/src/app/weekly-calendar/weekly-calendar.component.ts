@@ -11,20 +11,23 @@ import { ScheduleModel } from '../models/schedule.model';
 import { WeeklyCalendarModel } from '../models/weekly-calendar.model';
 import { ServiceEnum } from "../enums/service.enum";
 import { W } from '@angular/cdk/keycodes';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 export interface DialogData {
   date: Date;
   hour: string;
   unavailableServices:any[];
-  schedule?: ScheduleModel
+  schedule?: ScheduleModel;
 }
 
 @Component({
   selector: 'app-weekly-calendar',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, CommonModule, MatIconModule, MatCardModule],
+  imports: [MatButtonModule, MatDialogModule, CommonModule, MatIconModule, MatCardModule, MatCheckboxModule, FormsModule, MatInputModule, MatFormFieldModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './weekly-calendar.component.html',
   styleUrl: './weekly-calendar.component.css'
@@ -42,6 +45,10 @@ export class WeeklyCalendarComponent implements OnInit{
   selectedWeek=0;
   schedulingHours = ['08:00', '09:00', '10:00', '11:00','12:00', '13:00','14:00', '15:00','16:00', '17:00']
   schedules: ScheduleModel[]=[];
+  bath_checked = true;
+  grooming_checked = true;
+  vet_checked = true;
+  search = '';
 
   constructor(private mockService: MockService, private schedulingService: SchedulingService){
   }
@@ -52,6 +59,8 @@ export class WeeklyCalendarComponent implements OnInit{
     if(this.scheduleCalendar2025) this.scheduleCalendar2025 = this.schedulingService.buildScheduleCalendar();
     this.getSchedulesForSelectedWeek();
 
+    this.search = localStorage.getItem('search') || '';
+    if(this.search != '') this.filterByName();
   }
 
   private startSelectedWeekInfo() {
@@ -111,5 +120,17 @@ export class WeeklyCalendarComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       location.reload();
     });
+  }
+
+  filterByName(){
+    console.log('filterByName')
+    console.log('search', this.search);
+    localStorage.setItem('search', this.search)
+    this.getSchedulesForSelectedWeek()
+    let backUpFilteredScheduleCalendar = this.filteredScheduleCalendar;
+    this.filteredScheduleCalendar=[];
+    backUpFilteredScheduleCalendar.forEach(x=>{
+      this.filteredScheduleCalendar.push(new ScheduleCalendarModel(x.week, x.date, x.hour, x.schedules.filter(x=> x.customer.name.toLowerCase().includes(this.search.toLowerCase()))))
+    })
   }
 }

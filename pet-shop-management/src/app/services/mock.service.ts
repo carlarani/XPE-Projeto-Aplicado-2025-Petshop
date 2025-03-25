@@ -17,21 +17,21 @@ export class MockService {
 
   getCustomers(): CustomerModel[]{
     return [
-      new CustomerModel('Client01', [new PetModel('Cujo', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
-      new CustomerModel('Client02', [new PetModel('Mia', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
-      new CustomerModel('Client03', [new PetModel('Aninha', PetTypeEnum.dog, PetSizeEnum.L)], 'debit' ),
-      new CustomerModel('Client04', [new PetModel('Stella', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
-      new CustomerModel('Client05', [new PetModel('Cacau', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
-      new CustomerModel('Client06', [new PetModel('Pulga', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
-      new CustomerModel('Client07', [new PetModel('Fifi', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
+      new CustomerModel('Helena', [new PetModel('Cujo', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
+      new CustomerModel('Cecília', [new PetModel('Mia', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
+      new CustomerModel('Maitê', [new PetModel('Aninha', PetTypeEnum.dog, PetSizeEnum.L)], 'debit' ),
+      new CustomerModel('Miguel', [new PetModel('Stella', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
+      new CustomerModel('Ravi', [new PetModel('Cacau', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
+      new CustomerModel('Théo', [new PetModel('Pulga', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
+      new CustomerModel('Noah', [new PetModel('Fifi', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
     ]
   }
 
   getEmployees(): EmployeeModel[]{
     return [
-      new EmployeeModel('Employee01', ServiceEnum.bath),
-      new EmployeeModel('Employee02', ServiceEnum.grooming),
-      new EmployeeModel('Employee03', ServiceEnum.veterinary_doctor),
+      new EmployeeModel('Alice', ServiceEnum.bath),
+      new EmployeeModel('Arthur', ServiceEnum.grooming),
+      new EmployeeModel('Samuel', ServiceEnum.veterinary_doctor),
     ]
   }
 

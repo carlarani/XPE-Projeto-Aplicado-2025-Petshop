@@ -28,7 +28,8 @@
 }
 
 .schedule-card{
-  width:45px;
+  min-width:45px;
+  width: fit-content;
   height: 30px;
   padding: 5px;
   border-radius: 5px;
@@ -39,4 +40,16 @@
 .col-max-width{
   max-width: 90px;
   overflow: hidden;
+}
+
+.w-fc{
+  width: fit-content;
+}
+
+.mr-30{
+  margin-right: 30px;
+}
+
+.spacer{
+  width: 50%;
 }

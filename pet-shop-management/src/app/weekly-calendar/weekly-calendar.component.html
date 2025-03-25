@@ -7,6 +7,27 @@
     <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="changeWeek('+')">
       <mat-icon>chevron_right</mat-icon>
     </button></h1>
+    <section class="d-flex">
+      <span>Filtrar</span>
+      <mat-checkbox [(ngModel)]="bath_checked" class="mr-30">
+        <button mat-fab extended class="schedule-card bath w-fc">
+          {{serviceEnum.bath}}
+        </button></mat-checkbox>
+      <mat-checkbox [(ngModel)]="grooming_checked" class="mr-30">
+        <button mat-fab extended class="schedule-card grooming w-fc">
+          {{serviceEnum.grooming}}
+        </button></mat-checkbox>
+      <mat-checkbox [(ngModel)]="vet_checked" class="mr-30">
+        <button mat-fab extended class="schedule-card vet w-fc">
+          {{serviceEnum.veterinary_doctor}}
+        </button></mat-checkbox>
+        <div class="spacer">
+        </div>
+        <mat-form-field (input)="filterByName()">
+          <mat-label>Pesquisar</mat-label>
+          <input matInput [(ngModel)]="search">
+        </mat-form-field>
+    </section>
   <table class="w-100 m-30">
     <thead>
       <th></th>
@@ -26,8 +47,8 @@
             <div *ngFor="let scheduleCalendar of filteredScheduleCalendar" >
               <div *ngIf="day===scheduleCalendar.date && hour===scheduleCalendar.hour" class="d-flex">
                 <div *ngFor="let schedule of scheduleCalendar.schedules"  >
-                  <button mat-fab extended class="schedule-card" [ngClass]="schedule.employee.service===serviceEnum.bath ? 'bath': schedule.employee.service===serviceEnum.grooming ? 'grooming':'vet'" (click)="editScheduling(schedule)">
-                    {{schedule.pet.name}}
+                  <button mat-fab extended *ngIf="schedule.employee.service===serviceEnum.bath && bath_checked || schedule.employee.service===serviceEnum.grooming && grooming_checked || schedule.employee.service===serviceEnum.veterinary_doctor && vet_checked" class="schedule-card" [ngClass]="schedule.employee.service===serviceEnum.bath ? 'bath': schedule.employee.service===serviceEnum.grooming ? 'grooming':'vet'" (click)="editScheduling(schedule)">
+                    {{schedule.pet.name}} ({{schedule.customer.name}})
                   </button>
                 </div>
                 <button *ngIf="scheduleCalendar.schedules.length<3" class="w-45" mat-icon-button (click)="addScheduling(day , hour)">
@@ -40,10 +61,4 @@
       </tr>
     </tbody>
   </table>
-
-  <section class="d-flex space-evenly"> Legenda:
-    <span [class]="serviceEnum.bath" class="schedule-card">{{serviceEnum.bath}}</span>
-    <span [class]="serviceEnum.grooming"  class="schedule-card">{{serviceEnum.grooming}}</span>
-    <span [class]="serviceEnum.veterinary_doctor"  class="schedule-card">{{serviceEnum.veterinary_doctor}}</span>
-  </section>
 </div>
