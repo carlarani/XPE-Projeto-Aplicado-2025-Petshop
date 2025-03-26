@@ -130,7 +130,7 @@ export class WeeklyCalendarComponent implements OnInit{
     let backUpFilteredScheduleCalendar = this.filteredScheduleCalendar;
     this.filteredScheduleCalendar=[];
     backUpFilteredScheduleCalendar.forEach(x=>{
-      this.filteredScheduleCalendar.push(new ScheduleCalendarModel(x.week, x.date, x.hour, x.schedules.filter(x=> x.customer.name.toLowerCase().includes(this.search.toLowerCase()))))
+      this.filteredScheduleCalendar.push(new ScheduleCalendarModel(x.week, x.date, x.hour, x.schedules.filter(x=> x.customer.name.toLowerCase().includes(this.search.toLowerCase()) || x.pet.name.toLowerCase().includes(this.search.toLowerCase()))))
     })
   }
 }
