@@ -1,0 +1,73 @@
+<h2 mat-dialog-title class="title">Cadastrar novo cliente</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field class="m-5 w-long">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+    <h2 mat-dialog-title class="sub-title">Pets</h2>
+    <section [formGroup]="petForm1" *ngIf="petCount>=1">
+      <mat-form-field class="m-5 w-medium">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="m-5 w-short">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let petType of petTypes" [value]="petType">{{ petType }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="m-5 w-short">
+        <mat-label>Tamanho</mat-label>
+        <mat-select formControlName="size">
+          <mat-option *ngFor="let petSize of petSizes" [value]="petSize">{{ petSize }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section [formGroup]="petForm2" *ngIf="petCount>=2">
+      <mat-form-field class="m-5 w-medium">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="m-5 w-short">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let petType of petTypes" [value]="petType">{{ petType }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="m-5 w-short">
+        <mat-label>Tamanho</mat-label>
+        <mat-select formControlName="size">
+          <mat-option *ngFor="let petSize of petSizes" [value]="petSize">{{ petSize }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <section [formGroup]="petForm3" *ngIf="petCount==3">
+      <mat-form-field class="m-5 w-medium">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="m-5 w-short">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let petType of petTypes" [value]="petType">{{ petType }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="m-5 w-short">
+        <mat-label>Tamanho</mat-label>
+        <mat-select formControlName="size">
+          <mat-option *ngFor="let petSize of petSizes" [value]="petSize">{{ petSize }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+    <div class="example-button-container">
+      <button mat-fab *ngIf="petCount<3" (click)='addMorePet()'>
+        <mat-icon>add</mat-icon><mat-icon>pets</mat-icon>
+      </button>
+    </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Cancelar</button>
+  <button mat-button (click)="onAddClick()" [disabled]="!enableAddButton">Cadastrar</button>
+</mat-dialog-actions>

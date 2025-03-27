@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { DialogCustomerComponent } from './dialog-customer/dialog-customer.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { DatePipe } from '@angular/common';
     MatToolbarModule,
     ReactiveFormsModule,
     FormsModule,
+    DialogCustomerComponent
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -16,14 +16,15 @@ export class MockService {
   constructor() { }
 
   getCustomers(): CustomerModel[]{
+    const newLocal = 'debit';
     return [
-      new CustomerModel('Helena', [new PetModel('Cujo', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
-      new CustomerModel('Cecília', [new PetModel('Mia', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
-      new CustomerModel('Maitê', [new PetModel('Aninha', PetTypeEnum.dog, PetSizeEnum.L)], 'debit' ),
-      new CustomerModel('Miguel', [new PetModel('Stella', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
-      new CustomerModel('Ravi', [new PetModel('Cacau', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
-      new CustomerModel('Théo', [new PetModel('Pulga', PetTypeEnum.dog, PetSizeEnum.M)], 'debit' ),
-      new CustomerModel('Noah', [new PetModel('Fifi', PetTypeEnum.dog, PetSizeEnum.S)], 'debit' ),
+      new CustomerModel('Helena', [new PetModel('Cujo', PetTypeEnum.dog, PetSizeEnum.M), new PetModel('Mia', PetTypeEnum.dog, PetSizeEnum.S)]),
+      new CustomerModel('Cecília', [new PetModel('Mia', PetTypeEnum.dog, PetSizeEnum.S)]),
+      new CustomerModel('Maitê', [new PetModel('Aninha', PetTypeEnum.dog, PetSizeEnum.L)]),
+      new CustomerModel('Miguel', [new PetModel('Stella', PetTypeEnum.dog, PetSizeEnum.M)]),
+      new CustomerModel('Ravi', [new PetModel('Cacau', PetTypeEnum.dog, PetSizeEnum.S)]),
+      new CustomerModel('Théo', [new PetModel('Pulga', PetTypeEnum.dog, PetSizeEnum.M)]),
+      new CustomerModel('Noah', [new PetModel('Fifi', PetTypeEnum.dog, PetSizeEnum.S)]),
     ]
   }
 

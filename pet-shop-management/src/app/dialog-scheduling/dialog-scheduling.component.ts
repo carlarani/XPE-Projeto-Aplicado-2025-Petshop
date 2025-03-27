@@ -12,13 +12,14 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScheduleModel } from '../models/schedule.model';
 import { ServiceEnum } from '../enums/service.enum';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-dialog-scheduling',
   standalone: true,
   templateUrl: './dialog-scheduling.component.html',
   styleUrl: './dialog-scheduling.component.css',
-  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule,ReactiveFormsModule],
+  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogSchedulingComponent implements OnInit{
@@ -32,7 +33,7 @@ export class DialogSchedulingComponent implements OnInit{
   isEditFlag = false;
 
 
-  constructor(private formBuilder: FormBuilder, private mockService: MockService, private datePipe: DatePipe, private schedulingService: SchedulingService){
+  constructor(private formBuilder: FormBuilder, private mockService: MockService, private customerService: CustomerService, private datePipe: DatePipe, private schedulingService: SchedulingService){
     this.form = this.formBuilder.group({
       id: null,
       date: [null, Validators.required],
@@ -50,7 +51,7 @@ export class DialogSchedulingComponent implements OnInit{
 
   ngOnInit(){
     this.populateForm();
-    this.customersList = this.mockService.getCustomers();
+    this.customersList = this.customerService.getCustomers();
     this.employeesList = this.mockService.getEmployees().filter(x=> !this.data.unavailableServices.includes(x.service));
     if(this.data.schedule){
       this.isEdit();

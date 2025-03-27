@@ -5,13 +5,11 @@ export class CustomerModel {
   name: string;
   customerId: Guid;
   pets: PetModel[];
-  paymentMethod:string;
 
-  constructor(name:string, pets:PetModel[], paymentMethod:string){
+  constructor(name:string, pets:PetModel[]){
     this.name = name;
     this.customerId = Guid.create();
     this.pets = pets;
-    this.paymentMethod = paymentMethod
   }
 
 }

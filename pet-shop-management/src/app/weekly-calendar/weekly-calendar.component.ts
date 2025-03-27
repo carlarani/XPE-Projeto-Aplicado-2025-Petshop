@@ -80,11 +80,11 @@ export class WeeklyCalendarComponent implements OnInit{
   addScheduling(date: Date, hour: string){
     const unavailableServices: any[] = this.updateUnavailableServices(date, hour);
 
-    const dialogRef = this.dialog.open(DialogSchedulingComponent, {
+    const dialogSchedulingRef = this.dialog.open(DialogSchedulingComponent, {
         data: {date: date, hour: hour, unavailableServices: unavailableServices},
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogSchedulingRef.afterClosed().subscribe(result => {
       location.reload();
     });
   }
@@ -113,11 +113,11 @@ export class WeeklyCalendarComponent implements OnInit{
 
     const unavailableServices: any[] = this.updateUnavailableServices(schedule.date, schedule.hour);
 
-    const dialogRef = this.dialog.open(DialogSchedulingComponent, {
+    const dialogSchedulingRef = this.dialog.open(DialogSchedulingComponent, {
       data: {date: schedule.date, hour: schedule.hour, unavailableServices: unavailableServices, schedule},
   });
 
-    dialogRef.afterClosed().subscribe(result => {
+  dialogSchedulingRef.afterClosed().subscribe(result => {
       location.reload();
     });
   }

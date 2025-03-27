@@ -1,0 +1,24 @@
+.m-5{
+  margin: 5px;
+}
+
+.w-long{
+  width: 93%
+}
+
+.w-short{
+  width: 27%;
+}
+
+.w-medium{
+  width: 35%;
+}
+
+.title{
+  font-size: 1.75rem;
+}
+
+.sub-title{
+  font-size: 1.25rem;
+  margin-top: -25px;
+}
