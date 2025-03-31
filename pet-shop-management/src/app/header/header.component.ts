@@ -20,18 +20,10 @@ export class HeaderComponent {
 
   addNewClient(){
     const dialogClientRef = this.dialog.open(DialogCustomerComponent);
-    // const dialogRef = this.dialog.open(DialogClientComponent, {
-    //   data: {name: this.name(), animal: this.animal()},
-    // });
 
     dialogClientRef.afterClosed().subscribe(result => {
-      //location.reload();
+      location.reload();
     });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   if (result !== undefined) {
-    //     this.animal.set(result);
-    //   }
-    // });
+
   }
 }

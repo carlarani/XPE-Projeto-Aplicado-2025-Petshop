@@ -10,6 +10,7 @@ export class CustomerService {
 
   constructor(private mockService: MockService) {
     this.customersList = this.getCustomers() || this.mockService.getCustomers();
+    this.save()
   }
 
   addNewClient(customer: CustomerModel){
@@ -23,6 +24,6 @@ export class CustomerService {
 
   getCustomers(){
      const customersJSON = localStorage.getItem('customersList');
-     return (customersJSON)? JSON.parse(customersJSON): '';
+     return (customersJSON)? JSON.parse(customersJSON): this.mockService.getCustomers();
   }
 }

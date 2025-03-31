@@ -18,6 +18,10 @@
   background-color: #FE5F55;
 }
 
+.training, .Adestramento{
+  background-color: #A8C686;
+}
+
 .d-flex{
   display: flex;
   align-items: center;

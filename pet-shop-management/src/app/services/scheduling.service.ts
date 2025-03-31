@@ -4,6 +4,7 @@ import { ScheduleModel } from '../models/schedule.model';
 import { ScheduleCalendarModel } from '../models/schedule-calendar.model';
 import { WeeklyCalendarModel } from '../models/weekly-calendar.model';
 import { FormGroup } from '@angular/forms';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,6 @@ export class SchedulingService{
   }
 
   buildScheduleCalendar(): ScheduleCalendarModel[]{
-
     const hasScheduleCalendar = localStorage.getItem('scheduleCalendar');
     this.scheduleCalendar2025 = hasScheduleCalendar ? JSON.parse(hasScheduleCalendar):[];
     if(hasScheduleCalendar) return this.scheduleCalendar2025;
@@ -80,7 +80,6 @@ initMockSchedules(){
   if (!localStorageSchedules || JSON.parse(localStorageSchedules)?.length===0){
       this.schedules = this.mockService.getSchedules();
       this.schedules.forEach(x=>{
-        console.log('FIND', this.scheduleCalendar2025.findIndex(y=> x.date.getFullYear()===y.date.getFullYear() && x.date.getMonth()===y.date.getMonth() && x.date.getDate()===y.date.getDate() && x.hour===y.hour))
         const index = this.scheduleCalendar2025.findIndex(y=> x.date.getFullYear()===y.date.getFullYear() && x.date.getMonth()===y.date.getMonth() && x.date.getDate()===y.date.getDate() && x.hour===y.hour);
         this.scheduleCalendar2025[index].schedules.push(x);
       }
@@ -123,10 +122,20 @@ initMockSchedules(){
   }
 
   editScheduling(schedule: ScheduleModel) {
-    console.log(schedule);
     const indexCalendarToEdit = this.scheduleCalendar2025.findIndex(x=> x.date===schedule.date && x.hour===schedule.hour)
     const indexScheduleToEdit = this.scheduleCalendar2025[indexCalendarToEdit].schedules.findIndex(x=> x.id===schedule.id);
     this.scheduleCalendar2025[indexCalendarToEdit].schedules[indexScheduleToEdit] = schedule;
+    this.save()
+  }
+
+  deleteScheduling(schedule: ScheduleModel | undefined){
+    const indexCalendarToEdit = this.scheduleCalendar2025.findIndex(x=> x.date===schedule?.date && x.hour===schedule.hour)
+    const schedulesToKeep: ScheduleModel[] = [];
+    this.scheduleCalendar2025[indexCalendarToEdit].schedules.forEach(x=> {
+      if(x.id != schedule?.id)
+        schedulesToKeep.push(x);
+    })
+    this.scheduleCalendar2025[indexCalendarToEdit].schedules = schedulesToKeep;
     this.save()
   }
 }

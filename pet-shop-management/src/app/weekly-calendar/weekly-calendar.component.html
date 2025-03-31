@@ -21,6 +21,10 @@
         <button mat-fab extended class="schedule-card vet w-fc">
           {{serviceEnum.veterinary_doctor}}
         </button></mat-checkbox>
+      <mat-checkbox [(ngModel)]="training_checked" class="mr-30">
+        <button mat-fab extended class="schedule-card training w-fc">
+          {{serviceEnum.dog_training}}
+        </button></mat-checkbox>
         <div class="spacer">
         </div>
         <mat-form-field (input)="filterByName()">
@@ -47,7 +51,7 @@
             <div *ngFor="let scheduleCalendar of filteredScheduleCalendar" >
               <div *ngIf="day===scheduleCalendar.date && hour===scheduleCalendar.hour" class="d-flex">
                 <div *ngFor="let schedule of scheduleCalendar.schedules"  >
-                  <button mat-fab extended *ngIf="schedule.employee.service===serviceEnum.bath && bath_checked || schedule.employee.service===serviceEnum.grooming && grooming_checked || schedule.employee.service===serviceEnum.veterinary_doctor && vet_checked" class="schedule-card" [ngClass]="schedule.employee.service===serviceEnum.bath ? 'bath': schedule.employee.service===serviceEnum.grooming ? 'grooming':'vet'" (click)="editScheduling(schedule)">
+                  <button mat-fab extended *ngIf="schedule.employee.service===serviceEnum.bath && bath_checked || schedule.employee.service===serviceEnum.grooming && grooming_checked || schedule.employee.service===serviceEnum.veterinary_doctor && vet_checked || schedule.employee.service===serviceEnum.dog_training && training_checked" class="schedule-card" [ngClass]="schedule.employee.service===serviceEnum.bath ? 'bath': schedule.employee.service===serviceEnum.grooming ? 'grooming': schedule.employee.service===serviceEnum.veterinary_doctor ? 'vet': 'training'" (click)="editScheduling(schedule)">
                     {{schedule.pet.name}} ({{schedule.customer.name}})
                   </button>
                 </div>

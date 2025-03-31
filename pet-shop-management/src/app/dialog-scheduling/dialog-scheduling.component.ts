@@ -13,13 +13,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ScheduleModel } from '../models/schedule.model';
 import { ServiceEnum } from '../enums/service.enum';
 import { CustomerService } from '../services/customer.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dialog-scheduling',
   standalone: true,
   templateUrl: './dialog-scheduling.component.html',
   styleUrl: './dialog-scheduling.component.css',
-  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, ReactiveFormsModule],
+  imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, ReactiveFormsModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogSchedulingComponent implements OnInit{
@@ -88,7 +89,6 @@ populateForm(){
 schedule(isEditFlag:boolean){
   this.dialogRef.close();
   const message = (isEditFlag)? 'Editado com sucesso' : 'Agendado com sucesso';
-  console.log(message,this.form)
   if (isEditFlag)
     this.schedulingService.editScheduling(this.buildScheduleObject());
   else
@@ -113,5 +113,11 @@ buildScheduleObject(){
       this.form.controls['pet'].value,
       this.form.controls['employee'].value)
   }
+}
+
+deleteScheduling(){
+  this.schedulingService.deleteScheduling(this.data.schedule);
+  this.dialogRef.close();
+  this._snackBar.open('Agenda cancelada com sucesso!', 'Fechar')
 }
 }

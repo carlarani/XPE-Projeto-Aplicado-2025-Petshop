@@ -1,4 +1,9 @@
-<h2 mat-dialog-title width="300px">{{(isEditFlag)? "Editar agenda" : "Reservar agenda"}}</h2>
+<div class="header-scheduling-dialog">
+  <h2 mat-dialog-title width="300px">{{(isEditFlag)? "Editar agenda" : "Reservar agenda"}}</h2>
+  <button mat-mini-fab *ngIf="isEditFlag" (click)="deleteScheduling()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="form" class="d-flex-wrap">
     <mat-form-field class="m-10">

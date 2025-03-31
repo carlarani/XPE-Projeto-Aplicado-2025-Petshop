@@ -48,6 +48,7 @@ export class WeeklyCalendarComponent implements OnInit{
   bath_checked = true;
   grooming_checked = true;
   vet_checked = true;
+  training_checked = true;
   search = '';
 
   constructor(private mockService: MockService, private schedulingService: SchedulingService){
@@ -65,7 +66,7 @@ export class WeeklyCalendarComponent implements OnInit{
 
   private startSelectedWeekInfo() {
     if (!localStorage.getItem('selectedWeek')) {
-      this.selectedWeek = 12;
+      this.selectedWeek = 16;
       localStorage.setItem('selectedWeek', this.selectedWeek.toString());
     }
     else {
@@ -107,9 +108,7 @@ export class WeeklyCalendarComponent implements OnInit{
   }
 
   editScheduling(schedule: ScheduleModel){
-    console.log('schedule',schedule);
     const index = this.scheduleCalendar2025.findIndex(x=> x.schedules.find( y=> y.id === schedule.id));
-    console.log('index',index);
 
     const unavailableServices: any[] = this.updateUnavailableServices(schedule.date, schedule.hour);
 
@@ -123,8 +122,6 @@ export class WeeklyCalendarComponent implements OnInit{
   }
 
   filterByName(){
-    console.log('filterByName')
-    console.log('search', this.search);
     localStorage.setItem('search', this.search)
     this.getSchedulesForSelectedWeek()
     let backUpFilteredScheduleCalendar = this.filteredScheduleCalendar;
