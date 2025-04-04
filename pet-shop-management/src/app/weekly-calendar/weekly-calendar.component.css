@@ -32,12 +32,12 @@
 }
 
 .schedule-card{
-  min-width:45px;
+  min-width:25px;
   width: fit-content;
   height: 30px;
   padding: 5px;
   border-radius: 5px;
-  font-size: small;
+  font-size: xx-small;
   color: black;
 }
 

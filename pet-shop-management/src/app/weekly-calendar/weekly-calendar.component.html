@@ -55,7 +55,7 @@
                     {{schedule.pet.name}} ({{schedule.customer.name}})
                   </button>
                 </div>
-                <button *ngIf="scheduleCalendar.schedules.length<3" class="w-45" mat-icon-button (click)="addScheduling(day , hour)">
+                <button *ngIf="scheduleCalendar.schedules.length<maxCapacity" class="w-45" mat-icon-button (click)="addScheduling(day , hour)">
                   <mat-icon>add</mat-icon>
                 </button>
               </div>

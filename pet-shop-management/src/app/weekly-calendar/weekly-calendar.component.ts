@@ -50,8 +50,9 @@ export class WeeklyCalendarComponent implements OnInit{
   vet_checked = true;
   training_checked = true;
   search = '';
+  maxCapacity=4;
 
-  constructor(private mockService: MockService, private schedulingService: SchedulingService){
+  constructor(private schedulingService: SchedulingService){
   }
 
   ngOnInit(): void {
