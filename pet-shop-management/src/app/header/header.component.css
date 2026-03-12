@@ -1,12 +1,30 @@
-.bg-color{
+.bg-color {
   background-color: #2B2984 !important;
-  color:white;
+  color: white;
 }
 
-.spacer{
+.spacer {
   width: 60%;
 }
 
-.color-white{
+.color-white {
   color: white;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  padding: 0 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.user-name {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
 }

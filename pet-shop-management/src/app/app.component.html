@@ -1,7 +1,3 @@
-<router-outlet>
-  <app-header>
-  </app-header>
-  <app-weekly-calendar></app-weekly-calendar>
-  <footer class="h-100">
-  </footer>
-</router-outlet>
+<app-header [isHomePage]="isHomePage"></app-header>
+<router-outlet></router-outlet>
+<footer class="h-100"></footer>

@@ -1,0 +1,59 @@
+<!-- Debug Info (Opcional - Remova em produção) -->
+<div class="debug-section" *ngIf="showDebugInfo && tokenPayload">
+    <div class="debug-card">
+        <h3>🔐 Informações de Autenticação</h3>
+        <table class="debug-table">
+            <tr>
+                <td><strong>Usuário:</strong></td>
+                <td>{{ tokenPayload.nome }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ tokenPayload.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Perfil:</strong></td>
+                <td>🔹 {{ tokenPayload.perfil }}</td>
+            </tr>
+            <tr>
+                <td><strong>Scopes:</strong></td>
+                <td>
+                    <span class="scope-chip" *ngFor="let scope of tokenPayload.scopes">
+                        {{ scope }}
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Exemplo de Controle de Visibilidade por Scope -->
+<div class="permissions-section" *ngIf="showDebugInfo">
+    <div class="permission-example">
+        <h3>📋 Exemplos de Controle de Visibilidade</h3>
+
+        <div class="example-item" *appHasScope="'customers.create'">
+            ✅ Você tem permissão para <strong>criar clientes</strong> (customers.create)
+        </div>
+
+        <div class="example-item" *appHasScope="'users.delete'">
+            ✅ Você tem permissão para <strong>deletar usuários</strong> (users.delete)
+        </div>
+
+        <div class="example-item" *appHasScope="'analytics.read'">
+            ✅ Você tem permissão para <strong>visualizar analytics</strong> (analytics.read)
+        </div>
+
+        <div class="example-item denied" *ngIf="!hasScope('users.delete') && tokenPayload?.perfil !== 'gestão'">
+            ❌ Você <strong>não tem permissão</strong> para deletar usuários (users.delete)
+        </div>
+    </div>
+</div>
+
+<!-- Botão para Toggle Debug Info -->
+<button class="debug-toggle" *ngIf="tokenPayload" (click)="toggleDebugInfo()">
+    {{ showDebugInfo ? '🔒 Ocultar Info Debug' : '🔓 Mostrar Info Debug' }}
+</button>
+
+<!-- Conteúdo Principal -->
+<app-weekly-calendar></app-weekly-calendar>
