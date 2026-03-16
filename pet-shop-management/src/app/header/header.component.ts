@@ -44,4 +44,8 @@ export class HeaderComponent {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
+  hasScope(scope: string): boolean {
+    return this.authService.hasScope(scope);
+  }
 }

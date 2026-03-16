@@ -3,8 +3,8 @@ import { MockService } from './../services/mock.service';
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SchedulingService } from '../services/scheduling.service';
 import { DialogSchedulingComponent } from '../dialog-scheduling/dialog-scheduling.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ScheduleModel } from '../models/schedule.model';
@@ -16,11 +16,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../services/auth.service';
 
 export interface DialogData {
   date: Date;
   hour: string;
-  unavailableServices:any[];
+  unavailableServices: any[];
   schedule?: ScheduleModel;
 }
 
@@ -32,37 +33,38 @@ export interface DialogData {
   templateUrl: './weekly-calendar.component.html',
   styleUrl: './weekly-calendar.component.css'
 })
-export class WeeklyCalendarComponent implements OnInit{
+export class WeeklyCalendarComponent implements OnInit {
   readonly dialog = inject(MatDialog);
+  private authService = inject(AuthService);
   serviceEnum = ServiceEnum;
-  calendar2025: WeeklyCalendarModel[]=[];
-  scheduleCalendar2025: ScheduleCalendarModel[]=[];
-  filteredScheduleCalendar: ScheduleCalendarModel[]=[];
+  calendar2025: WeeklyCalendarModel[] = [];
+  scheduleCalendar2025: ScheduleCalendarModel[] = [];
+  filteredScheduleCalendar: ScheduleCalendarModel[] = [];
   week?: WeeklyCalendarModel;
-  daysOfThisWeek: Date[]=[];
+  daysOfThisWeek: Date[] = [];
   firstDay = new Date(2025, 0, 1);
-  dayCounter=1;
-  selectedWeek=0;
-  schedulingHours = ['08:00', '09:00', '10:00', '11:00','12:00', '13:00','14:00', '15:00','16:00', '17:00']
-  schedules: ScheduleModel[]=[];
+  dayCounter = 1;
+  selectedWeek = 0;
+  schedulingHours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']
+  schedules: ScheduleModel[] = [];
   bath_checked = true;
   grooming_checked = true;
   vet_checked = true;
   training_checked = true;
   search = '';
-  maxCapacity=4;
+  maxCapacity = 4;
 
-  constructor(private schedulingService: SchedulingService){
+  constructor(private schedulingService: SchedulingService) {
   }
 
   ngOnInit(): void {
     this.startSelectedWeekInfo();
     this.calendar2025 = this.schedulingService.buildCalendarByWeek();
-    if(this.scheduleCalendar2025) this.scheduleCalendar2025 = this.schedulingService.buildScheduleCalendar();
+    if (this.scheduleCalendar2025) this.scheduleCalendar2025 = this.schedulingService.buildScheduleCalendar();
     this.getSchedulesForSelectedWeek();
 
     this.search = localStorage.getItem('search') || '';
-    if(this.search != '') this.filterByName();
+    if (this.search != '') this.filterByName();
   }
 
   private startSelectedWeekInfo() {
@@ -75,15 +77,15 @@ export class WeeklyCalendarComponent implements OnInit{
     }
   }
 
-  getSchedulesForSelectedWeek(): void{
-    this.filteredScheduleCalendar = this.scheduleCalendar2025.filter(x=> x.week===this.selectedWeek)
+  getSchedulesForSelectedWeek(): void {
+    this.filteredScheduleCalendar = this.scheduleCalendar2025.filter(x => x.week === this.selectedWeek)
   }
 
-  addScheduling(date: Date, hour: string){
+  addScheduling(date: Date, hour: string) {
     const unavailableServices: any[] = this.updateUnavailableServices(date, hour);
 
     const dialogSchedulingRef = this.dialog.open(DialogSchedulingComponent, {
-        data: {date: date, hour: hour, unavailableServices: unavailableServices},
+      data: { date: date, hour: hour, unavailableServices: unavailableServices },
     });
 
     dialogSchedulingRef.afterClosed().subscribe(result => {
@@ -98,8 +100,8 @@ export class WeeklyCalendarComponent implements OnInit{
     return unavailableServices;
   }
 
-  changeWeek(way:string){
-    if(way==='+')
+  changeWeek(way: string) {
+    if (way === '+')
       this.selectedWeek++;
     else
       this.selectedWeek--;
@@ -108,27 +110,30 @@ export class WeeklyCalendarComponent implements OnInit{
     this.getSchedulesForSelectedWeek();
   }
 
-  editScheduling(schedule: ScheduleModel){
-    const index = this.scheduleCalendar2025.findIndex(x=> x.schedules.find( y=> y.id === schedule.id));
+  editScheduling(schedule: ScheduleModel) {
+    const index = this.scheduleCalendar2025.findIndex(x => x.schedules.find(y => y.id === schedule.id));
 
     const unavailableServices: any[] = this.updateUnavailableServices(schedule.date, schedule.hour);
 
     const dialogSchedulingRef = this.dialog.open(DialogSchedulingComponent, {
-      data: {date: schedule.date, hour: schedule.hour, unavailableServices: unavailableServices, schedule},
-  });
+      data: { date: schedule.date, hour: schedule.hour, unavailableServices: unavailableServices, schedule },
+    });
 
-  dialogSchedulingRef.afterClosed().subscribe(result => {
+    dialogSchedulingRef.afterClosed().subscribe(result => {
       location.reload();
     });
   }
 
-  filterByName(){
+  filterByName() {
     localStorage.setItem('search', this.search)
     this.getSchedulesForSelectedWeek()
     let backUpFilteredScheduleCalendar = this.filteredScheduleCalendar;
-    this.filteredScheduleCalendar=[];
-    backUpFilteredScheduleCalendar.forEach(x=>{
-      this.filteredScheduleCalendar.push(new ScheduleCalendarModel(x.week, x.date, x.hour, x.schedules.filter(x=> x.customer.name.toLowerCase().includes(this.search.toLowerCase()) || x.pet.name.toLowerCase().includes(this.search.toLowerCase()))))
+    this.filteredScheduleCalendar = [];
+    backUpFilteredScheduleCalendar.forEach(x => {
+      this.filteredScheduleCalendar.push(new ScheduleCalendarModel(x.week, x.date, x.hour, x.schedules.filter(x => x.customer.name.toLowerCase().includes(this.search.toLowerCase()) || x.pet.name.toLowerCase().includes(this.search.toLowerCase()))))
     })
+  }
+  hasScope(scope: string): boolean {
+    return this.authService.hasScope(scope);
   }
 }

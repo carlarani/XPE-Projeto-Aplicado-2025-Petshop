@@ -1,5 +1,5 @@
 <!-- Debug Info (Opcional - Remova em produção) -->
-<div class="debug-section" *ngIf="showDebugInfo && tokenPayload">
+<div class="debug-section" *ngIf="showDebugInfo && tokenPayload && hasScope('analytics.read')">
     <div class="debug-card">
         <h3>🔐 Informações de Autenticação</h3>
         <table class="debug-table">
@@ -32,15 +32,15 @@
     <div class="permission-example">
         <h3>📋 Exemplos de Controle de Visibilidade</h3>
 
-        <div class="example-item" *appHasScope="'customers.create'">
+        <div class="example-item" *ngIf="hasScope('customers.create')">
             ✅ Você tem permissão para <strong>criar clientes</strong> (customers.create)
         </div>
 
-        <div class="example-item" *appHasScope="'users.delete'">
+        <div class="example-item" *ngIf="hasScope('users.delete')">
             ✅ Você tem permissão para <strong>deletar usuários</strong> (users.delete)
         </div>
 
-        <div class="example-item" *appHasScope="'analytics.read'">
+        <div class="example-item" *ngIf="hasScope('analytics.read')">
             ✅ Você tem permissão para <strong>visualizar analytics</strong> (analytics.read)
         </div>
 

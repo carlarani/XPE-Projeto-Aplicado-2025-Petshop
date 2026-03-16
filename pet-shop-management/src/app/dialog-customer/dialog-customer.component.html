@@ -65,9 +65,10 @@
         <mat-icon>add</mat-icon><mat-icon>pets</mat-icon>
       </button>
     </div>
-    </form>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onCancelClick()">Cancelar</button>
-  <button mat-button (click)="onAddClick()" [disabled]="!enableAddButton">Cadastrar</button>
+  <button mat-button (click)="onAddClick()" *ngIf="hasScope('customers.create')"
+    [disabled]="!enableAddButton">Cadastrar</button>
 </mat-dialog-actions>

@@ -6,8 +6,8 @@
     <div *ngIf="isHomePage" class="user-info">
       <span class="user-name">{{ userName }}</span>
     </div>
-    <button *ngIf="isHomePage" mat-icon-button aria-label="Adicionar novo cliente" class="color-white"
-      (click)="addNewClient()">
+    <button *ngIf="isHomePage && hasScope('customers.create')" mat-icon-button aria-label="Adicionar novo cliente"
+      class="color-white" (click)="addNewClient()">
       <mat-icon>person_add</mat-icon>
     </button>
     <button *ngIf="isHomePage" mat-icon-button aria-label="Fazer logout" class="color-white" (click)="logout()">

@@ -14,6 +14,7 @@ import { ScheduleModel } from '../models/schedule.model';
 import { ServiceEnum } from '../enums/service.enum';
 import { CustomerService } from '../services/customer.service';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-dialog-scheduling',
@@ -23,18 +24,20 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, ReactiveFormsModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DialogSchedulingComponent implements OnInit{
+export class DialogSchedulingComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<WeeklyCalendarComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   private _snackBar = inject(MatSnackBar);
+  private authService = inject(AuthService);
   form: FormGroup;
-  customersList: any[]=[];
-  petsList: any[]=[];
-  employeesList: any[]=[];
+  customersList: any[] = [];
+  petsList: any[] = [];
+  employeesList: any[] = [];
   isEditFlag = false;
+  isFormDisabled = false;
 
 
-  constructor(private formBuilder: FormBuilder, private mockService: MockService, private customerService: CustomerService, private datePipe: DatePipe, private schedulingService: SchedulingService){
+  constructor(private formBuilder: FormBuilder, private mockService: MockService, private customerService: CustomerService, private datePipe: DatePipe, private schedulingService: SchedulingService) {
     this.form = this.formBuilder.group({
       id: null,
       date: [null, Validators.required],
@@ -50,74 +53,79 @@ export class DialogSchedulingComponent implements OnInit{
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
     this.populateForm();
     this.customersList = this.customerService.getCustomers();
-    this.employeesList = this.mockService.getEmployees().filter(x=> !this.data.unavailableServices.includes(x.service));
-    if(this.data.schedule){
+    this.employeesList = this.mockService.getEmployees().filter(x => !this.data.unavailableServices.includes(x.service));
+    if (this.data.schedule) {
       this.isEdit();
-      this.isEditFlag= true
+      this.isEditFlag = true
     }
+    if (!this.hasScope('schedules.update')) this.form.disable();
   }
 
   isEdit() {
     this.employeesList.push(this.data.schedule?.employee);
     this.form?.patchValue({
       id: this.data.schedule?.id,
-      customer: this.customersList.find(x=> x.name ===this.data.schedule?.customer.name),
+      customer: this.customersList.find(x => x.name === this.data.schedule?.customer.name),
       employee: this.data.schedule?.employee,
     })
 
-    setTimeout(()=> {
+    setTimeout(() => {
       this.form?.patchValue({
-        pet: this.petsList.find(x=> x.name===this.data.schedule?.pet.name),
+        pet: this.petsList.find(x => x.name === this.data.schedule?.pet.name),
       })
     }
       , 200)
 
   }
 
-populateForm(){
-  this.form?.patchValue({
-    date: this.datePipe.transform(this.data.date, 'dd/MM/yyyy'),
-    hour: this.data.hour
-  })
-  this.form.controls['date'].disable();
-  this.form.controls['hour'].disable();
-}
-
-schedule(isEditFlag:boolean){
-  this.dialogRef.close();
-  const message = (isEditFlag)? 'Editado com sucesso' : 'Agendado com sucesso';
-  if (isEditFlag)
-    this.schedulingService.editScheduling(this.buildScheduleObject());
-  else
-    this.schedulingService.addScheduling(this.buildScheduleObject());
-  this._snackBar.open(message, 'Fechar');
-}
-
-buildScheduleObject(){
-  if (this.isEditFlag){
-    return new ScheduleModel(
-      this.data.date,
-      this.data.hour,
-      this.form.controls['customer'].value,
-      this.form.controls['pet'].value,
-      this.form.controls['employee'].value,
-      this.form.controls['id'].value)
-  } else{
-    return new ScheduleModel(
-      this.data.date,
-      this.data.hour,
-      this.form.controls['customer'].value,
-      this.form.controls['pet'].value,
-      this.form.controls['employee'].value)
+  populateForm() {
+    this.form?.patchValue({
+      date: this.datePipe.transform(this.data.date, 'dd/MM/yyyy'),
+      hour: this.data.hour
+    })
+    this.form.controls['date'].disable();
+    this.form.controls['hour'].disable();
   }
-}
 
-deleteScheduling(){
-  this.schedulingService.deleteScheduling(this.data.schedule);
-  this.dialogRef.close();
-  this._snackBar.open('Agenda cancelada com sucesso!', 'Fechar')
-}
+  schedule(isEditFlag: boolean) {
+    this.dialogRef.close();
+    const message = (isEditFlag) ? 'Editado com sucesso' : 'Agendado com sucesso';
+    if (isEditFlag)
+      this.schedulingService.editScheduling(this.buildScheduleObject());
+    else
+      this.schedulingService.addScheduling(this.buildScheduleObject());
+    this._snackBar.open(message, 'Fechar');
+  }
+
+  buildScheduleObject() {
+    if (this.isEditFlag) {
+      return new ScheduleModel(
+        this.data.date,
+        this.data.hour,
+        this.form.controls['customer'].value,
+        this.form.controls['pet'].value,
+        this.form.controls['employee'].value,
+        this.form.controls['id'].value)
+    } else {
+      return new ScheduleModel(
+        this.data.date,
+        this.data.hour,
+        this.form.controls['customer'].value,
+        this.form.controls['pet'].value,
+        this.form.controls['employee'].value)
+    }
+  }
+
+  deleteScheduling() {
+    this.schedulingService.deleteScheduling(this.data.schedule);
+    this.dialogRef.close();
+    this._snackBar.open('Agenda cancelada com sucesso!', 'Fechar')
+  }
+
+  hasScope(scope: string): boolean {
+    return this.authService.hasScope(scope);
+  }
 }

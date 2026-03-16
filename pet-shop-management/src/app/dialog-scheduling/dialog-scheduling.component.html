@@ -1,6 +1,6 @@
 <div class="header-scheduling-dialog">
   <h2 mat-dialog-title width="300px">{{(isEditFlag)? "Editar agenda" : "Reservar agenda"}}</h2>
-  <button mat-mini-fab *ngIf="isEditFlag" (click)="deleteScheduling()">
+  <button mat-mini-fab *ngIf="isEditFlag && hasScope('schedules.delete')" (click)="deleteScheduling()">
     <mat-icon>delete</mat-icon>
   </button>
 </div>
@@ -8,31 +8,34 @@
   <form [formGroup]="form" class="d-flex-wrap">
     <mat-form-field class="m-10">
       <mat-label>Data</mat-label>
-      <input matInput formControlName="date" />
+      <input matInput formControlName="date" [disabled]="isFormDisabled" />
     </mat-form-field>
     <mat-form-field class="m-10">
       <mat-label>Hora</mat-label>
-      <input matInput formControlName="hour"/>
+      <input matInput formControlName="hour" [disabled]="isFormDisabled" />
     </mat-form-field>
     <mat-form-field class="m-10 w-74">
       <mat-label>Serviço</mat-label>
-      <mat-select formControlName="employee">
+      <mat-select formControlName="employee" [disabled]="isFormDisabled">
         <mat-option *ngFor="let employee of employeesList" [value]="employee">{{ employee.service }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="m-10">
       <mat-label>Cliente</mat-label>
-      <mat-select formControlName="customer">
-        <mat-option *ngFor="let customer of customersList" [value]="customer">{{customer.name}}</mat-option>
+      <mat-select formControlName="customer" [disabled]="isFormDisabled">
+        <mat-option *ngFor="let customer of customersList" [value]="customer"
+          [disabled]="!hasScope('schedules.create')">{{customer.name}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="m-10">
       <mat-label>Pet</mat-label>
-      <mat-select formControlName="pet">
-        <mat-option *ngFor="let pet of petsList" [value]="pet">{{pet.name}} - {{pet.type}} - {{pet.size}}</mat-option>
+      <mat-select formControlName="pet" [disabled]="isFormDisabled">
+        <mat-option *ngFor="let pet of petsList" [value]="pet" [disabled]="!hasScope('schedules.create')">{{pet.name}} -
+          {{pet.type}} - {{pet.size}}</mat-option>
       </mat-select>
     </mat-form-field>
     <br>
-    <button mat-flat-button class="w-100" (click)="schedule(isEditFlag)">{{(isEditFlag)? "Editar" : "Agendar"}}</button>
+    <button mat-flat-button class="w-100" *ngIf="hasScope('schedules.create') || hasScope('schedules.update')"
+      (click)="schedule(isEditFlag)">{{(isEditFlag)? "Editar" : "Agendar"}}</button>
   </form>
 </mat-dialog-content>

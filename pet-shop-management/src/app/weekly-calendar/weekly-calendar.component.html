@@ -60,15 +60,15 @@
               <div *ngIf="day===scheduleCalendar.date && hour===scheduleCalendar.hour" class="d-flex">
                 <div *ngFor="let schedule of scheduleCalendar.schedules">
                   <button mat-fab extended
-                    *ngIf="schedule.employee.service===serviceEnum.bath && bath_checked || schedule.employee.service===serviceEnum.grooming && grooming_checked || schedule.employee.service===serviceEnum.veterinary_doctor && vet_checked || schedule.employee.service===serviceEnum.dog_training && training_checked"
+                    *ngIf="(schedule.employee.service===serviceEnum.bath && bath_checked || schedule.employee.service===serviceEnum.grooming && grooming_checked || schedule.employee.service===serviceEnum.veterinary_doctor && vet_checked || schedule.employee.service===serviceEnum.dog_training && training_checked)"
                     class="schedule-card"
                     [ngClass]="schedule.employee.service===serviceEnum.bath ? 'bath': schedule.employee.service===serviceEnum.grooming ? 'grooming': schedule.employee.service===serviceEnum.veterinary_doctor ? 'vet': 'training'"
                     (click)="editScheduling(schedule)">
                     {{schedule.pet.name}} ({{schedule.customer.name}})
                   </button>
                 </div>
-                <button *ngIf="scheduleCalendar.schedules.length<maxCapacity" class="w-45" mat-icon-button
-                  (click)="addScheduling(day , hour)">
+                <button *ngIf="scheduleCalendar.schedules.length<maxCapacity && hasScope('schedules.create')"
+                  class="w-45" mat-icon-button (click)="addScheduling(day , hour)">
                   <mat-icon>add</mat-icon>
                 </button>
               </div>

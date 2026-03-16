@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CustomerService } from '../services/customer.service';
 import { CustomerModel } from '../models/customer.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-dialog-client',
@@ -38,6 +39,7 @@ export class DialogCustomerComponent {
   readonly dialogRef = inject(MatDialogRef<DialogCustomerComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   private _snackBar = inject(MatSnackBar);
+  private authService = inject(AuthService);
   form: FormGroup;
   petForm1: FormGroup;
   petForm2: FormGroup;
@@ -47,8 +49,8 @@ export class DialogCustomerComponent {
   petCount = 1;
 
 
-  get enableAddButton(){
-    switch(this.petCount) {
+  get enableAddButton() {
+    switch (this.petCount) {
       case 1:
         return this.form.valid && this.petForm1.valid;
       case 2:
@@ -60,9 +62,9 @@ export class DialogCustomerComponent {
     }
   }
 
-  constructor(private formBuilder: FormBuilder, private customerService: CustomerService){
+  constructor(private formBuilder: FormBuilder, private customerService: CustomerService) {
     this.form = this.formBuilder.group({
-      id:null,
+      id: null,
       name: [null, Validators.required],
       pets: [null],
     });
@@ -83,10 +85,10 @@ export class DialogCustomerComponent {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
   }
 
-  addMorePet(){
+  addMorePet() {
     this.petCount++;
   }
 
@@ -96,9 +98,9 @@ export class DialogCustomerComponent {
     this.dialogRef.close();
   }
 
-  buildCustomerObject(): CustomerModel{
+  buildCustomerObject(): CustomerModel {
     const petsList = [];
-    switch(this.petCount){
+    switch (this.petCount) {
       case 1:
         petsList.push(this.buildPetObject(this.petForm1));
         break;
@@ -113,14 +115,18 @@ export class DialogCustomerComponent {
         break;
     }
 
-    return new CustomerModel(this.form.controls['name'].value, petsList )
+    return new CustomerModel(this.form.controls['name'].value, petsList)
   }
 
-  buildPetObject(petForm: any): PetModel{
-      return new PetModel(petForm.controls['name'].value, petForm.controls['type'].value, petForm.controls['size'].value)
+  buildPetObject(petForm: any): PetModel {
+    return new PetModel(petForm.controls['name'].value, petForm.controls['type'].value, petForm.controls['size'].value)
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
+  }
+
+  hasScope(scope: string): boolean {
+    return this.authService.hasScope(scope);
   }
 }
