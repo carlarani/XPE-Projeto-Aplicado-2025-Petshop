@@ -1,0 +1,36 @@
+.employee-list-container {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.profile-select {
+    width: 100%;
+    min-width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-select mat-form-field {
+    width: 100%;
+    max-width: 180px;
+}
+
+mat-slide-toggle {
+    margin: 8px 0;
+}
+
+.header-actions {
+    margin-bottom: 20px;
+}
+
+.header-actions button {
+    margin-right: 10px;
+}

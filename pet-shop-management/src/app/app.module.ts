@@ -16,6 +16,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DialogCustomerComponent } from './dialog-customer/dialog-customer.component';
@@ -23,12 +28,14 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { HasScopeDirective } from './directives/has-scope.directive';
+import { EmployeeListComponent } from './employee-list/employee-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    EmployeeListComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +54,11 @@ import { HasScopeDirective } from './directives/has-scope.directive';
     MatInputModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    MatTableModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
     DialogCustomerComponent

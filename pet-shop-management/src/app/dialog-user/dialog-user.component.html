@@ -1,0 +1,42 @@
+<h2 mat-dialog-title class="title">Cadastrar novo usuário</h2>
+<form [formGroup]="form">
+    <div mat-dialog-content class="content">
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="nome" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Cargo</mat-label>
+            <input matInput formControlName="cargo" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Perfil de acesso</mat-label>
+            <mat-select formControlName="perfilAcesso">
+                <mat-option *ngFor="let profile of profiles" [value]="profile">{{ profile }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option *ngFor="let status of statuses" [value]="status">{{ status }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="senha" />
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button (click)="onCancelClick()">Cancelar</button>
+        <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="onAddClick()">Cadastrar</button>
+    </div>
+</form>

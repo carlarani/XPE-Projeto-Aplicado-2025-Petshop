@@ -60,7 +60,8 @@ export class MockService {
         'joao.silva@petshop.com',
         'senha123',
         AccessProfileEnum.gestao,
-        UserStatusEnum.ativo
+        UserStatusEnum.ativo,
+        'Gerente'
       ),
       new UserModel(
         '550e8400-e29b-41d4-a716-446655440002',
@@ -68,7 +69,8 @@ export class MockService {
         'maria.santos@petshop.com',
         'senha456',
         AccessProfileEnum.operacional,
-        UserStatusEnum.ativo
+        UserStatusEnum.ativo,
+        'Atendente'
       ),
       new UserModel(
         '550e8400-e29b-41d4-a716-446655440003',
@@ -76,7 +78,8 @@ export class MockService {
         'carlos.oliveira@petshop.com',
         'senha789',
         AccessProfileEnum.executor,
-        UserStatusEnum.ativo
+        UserStatusEnum.ativo,
+        'Veterinário'
       ),
       new UserModel(
         '550e8400-e29b-41d4-a716-446655440004',
@@ -84,7 +87,8 @@ export class MockService {
         'ana.costa@petshop.com',
         'senha321',
         AccessProfileEnum.executor,
-        UserStatusEnum.ativo
+        UserStatusEnum.ativo,
+        'Tosador'
       ),
       new UserModel(
         '550e8400-e29b-41d4-a716-446655440005',
@@ -92,7 +96,8 @@ export class MockService {
         'paulo.mendes@petshop.com',
         'senha654',
         AccessProfileEnum.operacional,
-        UserStatusEnum.inativo
+        UserStatusEnum.inativo,
+        'Atendente'
       ),
       new UserModel(
         '550e8400-e29b-41d4-a716-446655440006',
@@ -100,7 +105,8 @@ export class MockService {
         'fernanda.lima@petshop.com',
         'senha987',
         AccessProfileEnum.gestao,
-        UserStatusEnum.ativo
+        UserStatusEnum.ativo,
+        'Administradora'
       ),
     ]
   }

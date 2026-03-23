@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogCustomerComponent } from '../dialog-customer/dialog-customer.component';
+import { DialogUserComponent } from '../dialog-user/dialog-user.component';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -38,6 +39,10 @@ export class HeaderComponent {
     dialogClientRef.afterClosed().subscribe(result => {
       location.reload();
     });
+  }
+
+  listEmployees() {
+    this.router.navigate(['/employees']);
   }
 
   logout() {

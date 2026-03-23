@@ -10,6 +10,10 @@
       class="color-white" (click)="addNewClient()">
       <mat-icon>person_add</mat-icon>
     </button>
+    <button *ngIf="isHomePage && hasScope('users.read')" mat-icon-button aria-label="Listar funcionários"
+      class="color-white" (click)="listEmployees()">
+      <mat-icon>group</mat-icon>
+    </button>
     <button *ngIf="isHomePage" mat-icon-button aria-label="Fazer logout" class="color-white" (click)="logout()">
       <mat-icon>logout</mat-icon>
     </button>

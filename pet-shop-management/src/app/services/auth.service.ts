@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MockService } from './mock.service';
+import { UserService } from './user.service';
 import { TokenService } from './token.service';
 import { UserModel } from '../models/user.model';
 import { TokenPayload } from '../models/token-payload.model';
@@ -15,7 +15,7 @@ export class AuthService {
     public tokenPayload: Observable<TokenPayload | null>;
 
     constructor(
-        private mockService: MockService,
+        private userService: UserService,
         private tokenService: TokenService
     ) {
         this.currentUserSubject = new BehaviorSubject<UserModel | null>(this.getUserFromStorage());
@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     login(email: string, password: string): { success: boolean; message: string; token?: string } {
-        const users = this.mockService.getUsers();
+        const users = this.userService.getUsers();
         const user = users.find(u => u.email === email && u.senha === password);
 
         if (user) {

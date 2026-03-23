@@ -6,6 +6,7 @@ export class UserModel {
     nome: string;
     email: string;
     senha: string;
+    cargo?: string;
     perfilAcesso: AccessProfileEnum;
     status: UserStatusEnum;
 
@@ -15,7 +16,8 @@ export class UserModel {
         email: string,
         senha: string,
         perfilAcesso: AccessProfileEnum,
-        status: UserStatusEnum
+        status: UserStatusEnum,
+        cargo?: string
     ) {
         this.idUser = idUser;
         this.nome = nome;
@@ -23,5 +25,6 @@ export class UserModel {
         this.senha = senha;
         this.perfilAcesso = perfilAcesso;
         this.status = status;
+        this.cargo = cargo;
     }
 }
